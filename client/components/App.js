@@ -1,7 +1,13 @@
 import React from "react";
+import LoginForm from "./LoginForm";
 
 const App = () => {
-  return <h1>test</h1>;
+  return (
+    <div>
+      <h1>Movies</h1>
+      <LoginForm />
+    </div>
+  );
 };
 
 export default App;
