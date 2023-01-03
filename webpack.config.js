@@ -1,11 +1,14 @@
 const path = require("path");
+const ReactRefreshPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = (env, argv) => {
   const { mode } = argv;
   const additionalPlugins =
-    mode === "production" ? [] : [new webpack.HotModuleReplacementPlugin()];
+    mode === "production"
+      ? []
+      : [new webpack.HotModuleReplacementPlugin(), new ReactRefreshPlugin()];
 
   const additionalEntries =
     mode === "production"
@@ -14,6 +17,9 @@ module.exports = (env, argv) => {
 
   return {
     mode,
+    devServer: {
+      logging: "warn",
+    },
     entry: ["@babel/polyfill", "./client", ...additionalEntries],
     resolve: {
       alias: {
