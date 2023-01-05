@@ -20,6 +20,7 @@ module.exports = (env, argv) => {
     devServer: {
       logging: "warn",
     },
+    target: "node",
     entry: ["@babel/polyfill", "./client", ...additionalEntries],
     resolve: {
       alias: {
