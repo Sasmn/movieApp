@@ -20,6 +20,7 @@ const typeDefs = gql`
     _dummy: String
     getUserById(id: ID!): User
     getUserByName(username: String!): User
+    getAllUser: [User]
   }
   type Mutation {
     createUser(registerInput: RegisterInput): User

@@ -1,6 +1,13 @@
 require("dotenv").config();
-const { ApolloServer } = require("apollo-server");
+const express = require("express");
+const { ApolloServer } = require("@apollo/server");
+const { expressMiddleware } = require("@apollo/server/express4");
 const mongoose = require("mongoose");
+const typeDefs = require("./graphql/typedefs");
+const resolvers = require("./graphql/resolvers/index");
+
+//to remove the warning
+mongoose.set("strictQuery", true);
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -11,14 +18,17 @@ mongoose
     console.log("error connection to MongoDB:", error.message);
   });
 
-const typeDefs = require("./graphql/typedefs");
-const resolvers = require("./graphql/resolvers/index");
+const app = express();
+app.use(express.json());
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+(async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+  await server.start();
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`);
-});
+  app.use(expressMiddleware(server));
+})();
+
+module.exports = app;

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
+    "@apollo/server": "^4.3.0",
     "@babel/core": "^7.20.7",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.20.2",
@@ -86,6 +87,8 @@
   },
   "_moduleAliases": {
     "@root": ".",
-    "@util": "server/util"
+    "@util": "server/util",
+    "@models": "server/models",
+    "@middleware": "server/middleware"
   }
 }

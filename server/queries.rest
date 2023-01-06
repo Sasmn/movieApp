@@ -1,4 +1,4 @@
-POST http://localhost:4000
+POST http://localhost:8000/api
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
@@ -13,14 +13,14 @@ mutation createUser($registerInput: RegisterInput) {
 
 {
     "registerInput": {
-        "username": "test",
+        "username": "test5",
         "email": "test@test.com",
         "password": "test"
     }
 }
 
 ###
-POST  http://localhost:4000
+POST  http://localhost:8000/api/graph
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
@@ -35,4 +35,17 @@ query getUserByName ($username: String!) {
 
 {
     "username": "test"
+}
+
+###
+POST  http://localhost:8000/api
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+    getAllUser {
+        username
+        email
+        password
+    }
 }

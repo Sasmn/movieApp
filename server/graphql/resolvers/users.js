@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
-const User = require("../../models/user");
+const User = require("../../models/User");
 const { ApolloError } = require("apollo-server-errors");
 const bcrypt = require("bcryptjs");
 
@@ -16,17 +16,17 @@ const resolvers = {
 
       if (takenUsername) {
         throw new ApolloError(
-          `The username: ${takenUsername} is already taken`,
+          `The username: ${username} is already taken`,
           "USER_ALREADY_EXISTS"
         );
       }
 
       //See if old user exists with email
-      const takenEmail = await User.findOne({ username });
+      const takenEmail = await User.findOne({ email });
 
       if (takenEmail) {
         throw new ApolloError(
-          `A user is already registered with email: ${takenEmail}`,
+          `A user is already registered with email: ${email}`,
           "USER_ALREADY_EXISTS"
         );
       }
@@ -68,6 +68,7 @@ const resolvers = {
   Query: {
     getUserById: async (root, { ID }) => User.findOne(ID),
     getUserByName: async (root, username) => User.findOne(username),
+    getAllUser: async () => User.find(),
   },
 };
 

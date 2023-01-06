@@ -1,11 +1,11 @@
 import React from "react";
-import LoginForm from "./LoginForm";
+// import LoginForm from "./LoginForm";
 
 const App = () => {
   return (
     <div>
       <h1>Movies</h1>
-      <LoginForm />
+      {/* <LoginForm /> */}
     </div>
   );
 };
