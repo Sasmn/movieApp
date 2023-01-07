@@ -64,6 +64,40 @@ const resolvers = {
         ...res._doc,
       };
     },
+    loginUser: async (root, { loginInput: { username, password } }) => {
+      // see if username exists
+      const user = await User.findOne({ username });
+
+      // check if password is correct
+      if (user && (await bcrypt.compare(password, user.password))) {
+        // create new jwt token
+        const token = jwt.sign(
+          {
+            user_id: user._id,
+            username,
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
+        user.token = token;
+
+        //Save new user state (token) in MongoDB
+        const res = await user.save();
+
+        return {
+          id: res.id,
+          ...res._doc,
+        };
+      } else {
+        //if user doesnt exists or password is incorrect, throw error
+        throw new ApolloError(
+          "Incorrect password or username",
+          "INCORRECT_PASSWORD/USERNAME"
+        );
+      }
+    },
   },
   Query: {
     getUserById: async (root, { ID }) => User.findOne(ID),

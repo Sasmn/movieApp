@@ -10,6 +10,7 @@ const { PORT, inProduction } = require("@util/common");
 const app = express();
 
 // Require is here so we can delete it from cache when files change (*)
+// Adding the backend to the /api route as middleware
 app.use("/api", (req, res, next) => require("./server/index")(req, res, next)); // eslint-disable-line
 
 /**
@@ -67,7 +68,3 @@ if (!inProduction) {
 app.listen(PORT, () => {
   console.log(`Started on port ${PORT}`);
 });
-
-// graphqlServer.listen().then(({ url }) => {
-//   console.log(`Server ready at ${url}`);
-// });

@@ -24,6 +24,7 @@ const typeDefs = gql`
   }
   type Mutation {
     createUser(registerInput: RegisterInput): User
+    loginUser(loginInput: LoginInput): User
   }
 `;
 
