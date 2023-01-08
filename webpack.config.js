@@ -17,10 +17,10 @@ module.exports = (env, argv) => {
 
   return {
     mode,
+    devtool: "inline-source-map",
     devServer: {
       logging: "warn",
     },
-    target: "node",
     entry: ["@babel/polyfill", "./client", ...additionalEntries],
     resolve: {
       alias: {
