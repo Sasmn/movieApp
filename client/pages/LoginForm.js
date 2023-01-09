@@ -1,47 +1,72 @@
-import React, { useState } from "react";
+import uniqid from "uniqid";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../queries";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { useForm } from "../util/hooks";
+import { LOGIN_USER } from "../queries";
 
 const LoginForm = () => {
-  const [loginData, setLoginData] = useState({
+  const navigate = useNavigate();
+  const context = useContext(AuthContext);
+  const [errors, setErrors] = useState([]);
+
+  const loginUserCallback = () => {
+    console.log("Callback hit");
+    console.log(values);
+    loginUser();
+  };
+
+  const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     username: "",
-    email: "",
     password: "",
   });
 
-  const [createUser] = useMutation(CREATE_USER);
-
-  const submit = async (event) => {
-    event.preventDefault();
-
-    createUser({ variables: loginData });
-  };
+  const [loginUser] = useMutation(LOGIN_USER, {
+    update(proxy, { data: { loginUser: userData } }) {
+      context.login(userData);
+      navigate("/");
+    },
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors);
+    },
+    variables: { loginInput: values },
+  });
 
   return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={submit}>
+      <h3>Login</h3>
+      <p>Sign in</p>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="username">username: </label>
         <input
-          value={loginData.username}
-          onChange={({ target }) =>
-            setLoginData({ ...loginData, username: target.value })
-          }
+          autoComplete="off"
+          name="username"
+          id="username"
+          value={values.username}
+          onChange={onChange}
         />
+        <br />
+        <label htmlFor="password">password: </label>
         <input
-          value={loginData.email}
-          onChange={({ target }) =>
-            setLoginData({ ...loginData, email: target.value })
-          }
-        />
-        <input
+          autoComplete="off"
+          name="password"
+          id="password"
           type="password"
-          value={loginData.password}
-          onChange={({ target }) =>
-            setLoginData({ ...loginData, password: target.value })
-          }
+          value={values.password}
+          onChange={onChange}
         />
-        <button type="submit">Submit</button>
+        <br />
+        <button type="submit">Login</button>
       </form>
+      {errors.map((error) => {
+        return (
+          <div key={uniqid()}>
+            <h2>Error</h2>
+            {error.message}
+          </div>
+        );
+      })}
     </div>
   );
 };
