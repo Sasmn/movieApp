@@ -5,6 +5,7 @@ import { CREATE_USER } from "../queries";
 const LoginForm = () => {
   const [loginData, setLoginData] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
@@ -24,6 +25,12 @@ const LoginForm = () => {
           value={loginData.username}
           onChange={({ target }) =>
             setLoginData({ ...loginData, username: target.value })
+          }
+        />
+        <input
+          value={loginData.email}
+          onChange={({ target }) =>
+            setLoginData({ ...loginData, email: target.value })
           }
         />
         <input

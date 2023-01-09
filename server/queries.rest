@@ -49,3 +49,24 @@ query {
         password
     }
 }
+
+###
+POST  http://localhost:8000/api
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation LoginUser($loginInput: LoginInput) {
+  loginUser(loginInput: $loginInput) {
+    username
+    email
+    password
+    token
+  }
+}
+
+{
+  "loginInput": {
+    "username": "test",
+    "password": "test"
+  }
+}

@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
+import { gql } from "graphql-tag";
 
 export const CREATE_USER = gql`
-  query getUserByName($username: String!) {
-    getUserByName(username: $username) {
+  mutation CreateUser($registerInput: RegisterInput) {
+    createUser(registerInput: $registerInput) {
       username
       email
       password

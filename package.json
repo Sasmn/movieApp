@@ -6,9 +6,6 @@
   "main": "index.js",
   "author": "Domonkos Sasi",
   "license": "ISC",
-  "engines": {
-    "node": ">=10.15"
-  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "start": "cross-env NODE_ENV=production node index.js",
@@ -18,6 +15,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
+    "@apollo/react-hooks": "^4.0.0",
     "@apollo/server": "^4.3.0",
     "@babel/core": "^7.20.7",
     "@babel/polyfill": "^7.12.1",
@@ -38,11 +36,14 @@
     "express-async-errors": "^3.1.1",
     "file-loader": "^6.2.0",
     "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^3.1.2",
     "module-alias": "^2.2.2",
     "mongoose": "^6.8.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "style-loader": "^3.3.1",
     "web-vitals": "^2.1.4",
@@ -76,6 +77,7 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "cross-env": "^7.0.3",
+    "dotenv-webpack": "^8.0.1",
     "hot-module-replacement": "^3.0.4",
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.20",
