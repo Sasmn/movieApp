@@ -26,6 +26,9 @@ app.use(express.json());
     typeDefs,
     resolvers,
   });
+  server.applyApolloServer({
+    onHealthCheck: (e) => console.log("Health check", e),
+  });
   await server.start();
 
   app.use(expressMiddleware(server));

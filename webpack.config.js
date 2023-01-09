@@ -20,6 +20,7 @@ module.exports = (env, argv) => {
     devtool: "inline-source-map",
     devServer: {
       logging: "warn",
+      noInfo: true,
     },
     entry: ["@babel/polyfill", "./client", ...additionalEntries],
     resolve: {

@@ -5,9 +5,6 @@ const httpLink = new createHttpLink({
   uri: `http://localhost:${process.env.PORT}/api`,
 });
 
-console.log(process.env.PORT);
-console.log("HELÓ");
-
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");
   return {

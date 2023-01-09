@@ -18,6 +18,7 @@ if (token) {
 
 const AuthContext = createContext({
   user: null,
+  //empty functions, defined in AuthProvider
   login: (userData) => {},
   logout: () => {},
 });
