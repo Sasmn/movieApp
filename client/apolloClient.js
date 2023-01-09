@@ -2,8 +2,11 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 const httpLink = new createHttpLink({
-  uri: `http://localhost:5000/api`,
+  uri: `http://localhost:${process.env.PORT}/api`,
 });
+
+console.log(process.env.PORT);
+console.log("HELÓ");
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");

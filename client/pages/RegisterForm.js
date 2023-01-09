@@ -1,3 +1,4 @@
+import uniqid from "uniqid";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../util/hooks";
@@ -82,9 +83,8 @@ const RegisterForm = (props) => {
         <button type="submit">Register</button>
       </form>
       {errors.map((error) => {
-        //missing key prop
         return (
-          <div>
+          <div key={uniqid()}>
             <h2>Error</h2>
             {error.message}
           </div>
