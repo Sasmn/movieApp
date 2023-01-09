@@ -1,4 +1,3 @@
-// require("dotenv").config();
 const express = require("express");
 const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
@@ -26,9 +25,7 @@ app.use(express.json());
     typeDefs,
     resolvers,
   });
-  server.applyApolloServer({
-    onHealthCheck: (e) => console.log("Health check", e),
-  });
+
   await server.start();
 
   app.use(expressMiddleware(server));
