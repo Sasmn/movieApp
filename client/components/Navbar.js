@@ -6,8 +6,6 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(user);
-
   const onLogout = () => {
     logout();
     navigate("/");
