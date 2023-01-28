@@ -1,3 +1,4 @@
+// import missingPoster from "../missing_poster.jpg";
 const axios = require("axios");
 require("dotenv").config();
 
@@ -48,6 +49,23 @@ const resolvers = {
         }
       }
 
+      // const imageUrl = async (img) => {
+      //   let safeUrl;
+      //   img === null
+      //     ? (safeUrl = missingPoster)
+      //     : await axios
+      //         .get(img.url)
+      //         .then(() => {
+      //           safeUrl = img.url;
+      //         })
+      //         .catch((error) => {
+      //           safeUrl = missingPoster;
+      //         });
+
+      //   console.log(safeUrl);
+      //   return safeUrl;
+      // };
+
       movieLists = movieLists.map((movieList, index) => {
         movieList = movieList.map((movie) => {
           let url;
@@ -57,7 +75,7 @@ const resolvers = {
           return {
             id: movie.id,
             title: movie.titleText.text,
-            img: url,
+            img: url.concat("_V1_FM_UX600_.jpg"),
           };
         });
         return {
@@ -110,7 +128,7 @@ const resolvers = {
         return {
           id: movie.id,
           title: movie.titleText.text,
-          img: url,
+          img: url.concat("_V1_FM_UX600_.jpg"),
         };
       });
       return movies;
@@ -119,6 +137,9 @@ const resolvers = {
       const options = {
         method: "GET",
         url: `https://moviesdatabase.p.rapidapi.com/titles/${id}`,
+        params: {
+          info: "mini_info",
+        },
         headers: {
           "X-RapidAPI-Key": process.env.IMDB_KEY,
           "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
@@ -128,7 +149,7 @@ const resolvers = {
       try {
         const { data } = await axios(options);
         const movie = data.results;
-
+        console.log(movie);
         let url;
         movie.primaryImage === null
           ? (url = "")
@@ -137,7 +158,7 @@ const resolvers = {
           return {
             id: movie.id,
             title: movie.titleText.text,
-            img: url,
+            img: url.concat("_V1_FM_UX600_.jpg"),
           };
         }
       } catch (error) {

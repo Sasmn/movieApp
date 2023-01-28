@@ -42,7 +42,20 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ["style-loader", "css-loader"],
+          use: [
+            // Creates `style` nodes from JS strings
+            "style-loader",
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            // {
+            //   loader: "sass-loader",
+            //   options: {
+            //     // Prefer `dart-sass`
+            //     implementation: sass,
+            //   },
+            // },
+          ],
         },
         {
           test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,

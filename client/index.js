@@ -6,18 +6,22 @@ import { BrowserRouter } from "react-router-dom";
 import client from "./apolloClient";
 import { AuthProvider } from "./context/AuthContext";
 
+import "./assets/index.scss";
 import App from "./components/App";
+import { MovieProvider } from "./context/MovieContext";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <AuthProvider>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        {/* <React.StrictMode> */}
-        <App />
-        {/* </React.StrictMode> */}
-      </BrowserRouter>
-    </ApolloProvider>
+    <MovieProvider>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          {/* <React.StrictMode> */}
+          <App />
+          {/* </React.StrictMode> */}
+        </BrowserRouter>
+      </ApolloProvider>
+    </MovieProvider>
   </AuthProvider>
 );

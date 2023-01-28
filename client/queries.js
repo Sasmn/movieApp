@@ -46,8 +46,8 @@ export const GET_MOVIES = gql`
 `;
 
 export const GET_MOVIE = gql`
-  query GetMovie($getMovieId: String) {
-    getMovie(id: $getMovieId) {
+  query GetMovie($id: String) {
+    getMovie(id: $id) {
       id
       img
       title

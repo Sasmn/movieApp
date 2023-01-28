@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import DropdownCSS from "../assets/Dropdown.module.scss";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -13,7 +14,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <h2>Navbar</h2>
+      <h2 className={DropdownCSS.navbar}>Navbar</h2>
       <Link to="/">Home</Link>
       <Link to="/movies">Movies</Link>
       {user ? (
