@@ -21,3 +21,44 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const GET_INDEX_MOVIES = gql`
+  query GetIndexMovies {
+    getIndexMovies {
+      type
+      movies {
+        id
+        title
+        img
+      }
+    }
+  }
+`;
+
+export const GET_MOVIES = gql`
+  query GetMovies($apiInput: ApiInput) {
+    getMovies(apiInput: $apiInput) {
+      id
+      title
+      img
+    }
+  }
+`;
+
+export const GET_MOVIE = gql`
+  query GetMovie($getMovieId: String) {
+    getMovie(id: $getMovieId) {
+      id
+      img
+      title
+    }
+  }
+`;
+
+export const GET_GENRES = gql`
+  query GetGenres {
+    getGenres {
+      description
+    }
+  }
+`;

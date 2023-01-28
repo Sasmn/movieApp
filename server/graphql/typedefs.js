@@ -7,6 +7,24 @@ const typeDefs = gql`
     password: String
     token: String
   }
+  type Genre {
+    description: String
+    # endpoint: String
+    # img: String
+  }
+  type Movie {
+    id: String
+    title: String
+    img: String
+  }
+  type MovieList {
+    type: String
+    movies: [Movie]
+  }
+  input ApiInput {
+    list: String
+    genre: String
+  }
   input RegisterInput {
     username: String
     email: String
@@ -22,6 +40,10 @@ const typeDefs = gql`
     getUserById(id: ID!): User
     getUserByName(username: String!): User
     getAllUser: [User]
+    getGenres: [Genre]
+    getIndexMovies: [MovieList]
+    getMovies(apiInput: ApiInput): [Movie]
+    getMovie(id: String): Movie
   }
   type Mutation {
     createUser(registerInput: RegisterInput): User

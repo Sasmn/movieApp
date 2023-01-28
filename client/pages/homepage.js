@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useLazyQuery } from "@apollo/client";
+import { GET_GENRES } from "../queries";
 
 const Homepage = () => {
   const { user } = useContext(AuthContext);
