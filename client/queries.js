@@ -62,3 +62,58 @@ export const GET_GENRES = gql`
     }
   }
 `;
+
+export const GET_COMMENTS_MOVIE = gql`
+  query GetAllCommentsByMovieID($movieId: String!) {
+    getAllCommentsByMovieID(movieID: $movieId) {
+      _id
+      username
+      movieID
+      body
+    }
+  }
+`;
+
+export const GET_COMMENTS_USER = gql`
+  query GetAllCommentsByUsername($username: String!) {
+    getAllCommentsByUsername(username: $username) {
+      _id
+      username
+      movieID
+      body
+    }
+  }
+`;
+
+export const CREATE_COMMENT = gql`
+  mutation CreateComment($commentInput: CommentInput) {
+    createComment(commentInput: $commentInput) {
+      _id
+      username
+      movieID
+      body
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation DeleteComment($deleteCommentId2: ID!) {
+    deleteComment(id: $deleteCommentId2) {
+      _id
+      username
+      movieID
+      body
+    }
+  }
+`;
+
+export const EDIT_COMMENT = gql`
+  mutation EditComment($editCommentId: ID!, $body: String) {
+    editComment(id: $editCommentId, body: $body) {
+      _id
+      username
+      movieID
+      body
+    }
+  }
+`;

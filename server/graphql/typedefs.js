@@ -45,6 +45,12 @@ const typeDefs = gql`
     type: String
     movies: [MiniMovie]
   }
+  type Comment {
+    _id: ID!
+    username: String
+    movieID: String
+    body: String
+  }
   input ApiInput {
     list: String
     genre: String
@@ -60,6 +66,11 @@ const typeDefs = gql`
     username: String
     password: String
   }
+  input CommentInput {
+    username: String
+    movieID: String
+    body: String
+  }
   type Query {
     _dummy: String
     getUserById(id: ID!): User
@@ -69,10 +80,15 @@ const typeDefs = gql`
     getIndexMovies: [MovieList]
     getMovies(apiInput: ApiInput): [MiniMovie]
     getMovie(id: String): FullMovie
+    getAllCommentsByUsername(username: String!): [Comment]
+    getAllCommentsByMovieID(movieID: String!): [Comment]
   }
   type Mutation {
     createUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
+    createComment(commentInput: CommentInput): Comment
+    deleteComment(id: ID!, username: String!): Comment
+    editComment(id: ID!, body: String, username: String!): Comment
   }
 `;
 
