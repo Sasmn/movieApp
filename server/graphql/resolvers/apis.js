@@ -50,15 +50,7 @@ const resolvers = {
 
       movieLists = movieLists.map((movieList, index) => {
         movieList = movieList.map((movie) => {
-          let url;
-          movie.primaryImage === null
-            ? (url = "")
-            : (url = movie.primaryImage.url);
-          return {
-            id: movie.id,
-            title: movie.titleText.text,
-            img: url.concat("_V1_FM_UX200_.jpg"),
-          };
+          return movieMini(movie);
         });
         return {
           type: lists[index],
@@ -68,62 +60,13 @@ const resolvers = {
 
       return movieLists;
     },
-    getMovies: async (root, { apiInput: { list, genre, page } }) => {
-      let params;
-      if (genre === "") {
-        params = {
-          limit: "20",
-          list: list,
-          page: page,
-        };
-      } else {
-        params = {
-          limit: "20",
-          list: list,
-          genre: genre,
-          page: page,
-        };
-      }
+    getMovies: async (root, { apiInput }) => {
+      if (apiInput.genre === "") delete apiInput.genre;
       let movies;
       const options = {
         method: "GET",
         url: "https://moviesdatabase.p.rapidapi.com/titles",
-        params: params,
-        headers: {
-          "X-RapidAPI-Key": process.env.IMDB_KEY,
-          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
-        },
-      };
-
-      await axios
-        .request(options)
-        .then(function (response) {
-          movies = response.data.results;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-
-      let url;
-      movies = movies.map((movie) => {
-        movie.primaryImage === null
-          ? (url = "")
-          : (url = movie.primaryImage.url);
-        return {
-          id: movie.id,
-          title: movie.titleText.text,
-          img: url.concat("_V1_FM_UX200_.jpg"),
-        };
-      });
-      return movies;
-    },
-    getMovie: async (root, { id }) => {
-      const options = {
-        method: "GET",
-        url: `https://moviesdatabase.p.rapidapi.com/titles/${id}`,
-        params: {
-          info: "mini_info",
-        },
+        params: { limit: "20", ...apiInput },
         headers: {
           "X-RapidAPI-Key": process.env.IMDB_KEY,
           "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
@@ -132,20 +75,59 @@ const resolvers = {
 
       try {
         const { data } = await axios(options);
-        const movie = data.results;
-        let url;
-        movie.primaryImage === null
-          ? (url = "")
-          : (url = movie.primaryImage.url);
-        if (movie) {
-          return {
-            id: movie.id,
-            title: movie.titleText.text,
-            img: url.concat("_V1_FM_UX1000_.jpg"),
-          };
-        }
+        movies = data.results;
       } catch (error) {
         console.error(error);
+      }
+
+      movies = movies.map((movie) => {
+        console.log(movie);
+        return movieMini(movie);
+      });
+      return movies;
+    },
+    getMovie: async (root, { id }) => {
+      const optionsMovie = {
+        method: "GET",
+        url: `https://moviesdatabase.p.rapidapi.com/titles/${id}`,
+        params: {
+          info: "base_info",
+        },
+        headers: {
+          "X-RapidAPI-Key": process.env.IMDB_KEY,
+          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+        },
+      };
+
+      let movie;
+      try {
+        const { data } = await axios(optionsMovie);
+        movie = data.results;
+      } catch (error) {
+        console.error(error);
+      }
+
+      const optionsActors = {
+        method: "GET",
+        url: `https://moviesdatabase.p.rapidapi.com/titles/${id}`,
+        params: {
+          info: "extendedCast",
+        },
+        headers: {
+          "X-RapidAPI-Key": process.env.IMDB_KEY,
+          "X-RapidAPI-Host": "moviesdatabase.p.rapidapi.com",
+        },
+      };
+
+      let actors;
+      try {
+        const { data } = await axios(optionsActors);
+        actors = data.results;
+      } catch (error) {
+        console.error(error);
+      }
+      if (movie && actors) {
+        return movieFull(movie, actors);
       }
     },
     getGenres: async (root) => {
@@ -160,21 +142,17 @@ const resolvers = {
         },
       };
 
-      if (process.env.IMDB_KEY) {
-        try {
-          const { data } = await axios(options);
-          if (data.results) {
-            const genresArray = data.results;
-            genresArray.shift();
-            genres = genresArray.map((genre) => {
-              return { description: genre };
-            });
-          }
-        } catch (error) {
-          console.error(error);
+      try {
+        const { data } = await axios(options);
+        if (data.results) {
+          const genresArray = data.results;
+          genresArray.shift();
+          genres = genresArray.map((genre) => {
+            return { description: genre };
+          });
         }
-      } else {
-        console.log("IMDB_KEY not found in the environment variables");
+      } catch (error) {
+        console.error(error);
       }
 
       return genres;
@@ -183,3 +161,56 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+
+const movieFull = (movie, actors) => {
+  let movieUrl;
+  movie.primaryImage === null
+    ? (movieUrl = "")
+    : (movieUrl = movie.primaryImage.url);
+
+  return {
+    id: movie.id,
+    title: movie.titleText.text,
+    img: movieUrl.concat("_V1_FM_UX1000_.jpg"),
+    genres: movie.genres.genres.map((genre) => {
+      return { description: genre.text };
+    }),
+    rating: {
+      score: movie.ratingsSummary.aggregateRating,
+      count: movie.ratingsSummary.voteCount,
+    },
+    releaseDate: {
+      day: movie.releaseDate ? movie.releaseDate.day : 0,
+      month: movie.releaseDate ? movie.releaseDate.month : 0,
+      year: movie.releaseDate ? movie.releaseDate.year : 0,
+    },
+    length: movie.runtime ? movie.runtime.seconds : 0,
+    plot: movie.plot ? movie.plot.plotText.plainText : "",
+    actors: actors.cast.edges.map((actor) => {
+      let actorUrl;
+      actor.node.name.primaryImage === null
+        ? (actorUrl = "")
+        : (actorUrl = actor.node.name.primaryImage.url);
+      return {
+        name: actor.node.name.nameText.text,
+        img: actorUrl.concat("_V1_FM_UX200_.jpg"),
+      };
+    }),
+  };
+};
+
+const movieMini = (movie) => {
+  let url;
+  movie.primaryImage === null ? (url = "") : (url = movie.primaryImage.url);
+
+  return {
+    id: movie.id,
+    title: movie.titleText.text,
+    img: url.concat("_V1_FM_UX500_.jpg"),
+    releaseDate: {
+      day: movie.releaseDate ? movie.releaseDate.day : 0,
+      month: movie.releaseDate ? movie.releaseDate.month : 0,
+      year: movie.releaseDate ? movie.releaseDate.year : 0,
+    },
+  };
+};

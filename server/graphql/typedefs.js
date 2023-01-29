@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
+  scalar Date
   type User {
     username: String
     email: String
@@ -10,14 +11,39 @@ const typeDefs = gql`
   type Genre {
     description: String
   }
-  type Movie {
+  type Rating {
+    score: Float
+    count: Int
+  }
+  type Date {
+    day: Int
+    month: Int
+    year: Int
+  }
+  type Actor {
+    name: String
+    img: String
+  }
+  type FullMovie {
     id: String
     title: String
     img: String
+    genres: [Genre]
+    rating: Rating
+    releaseDate: Date
+    length: Int
+    plot: String
+    actors: [Actor]
+  }
+  type MiniMovie {
+    id: String
+    title: String
+    img: String
+    releaseDate: Date
   }
   type MovieList {
     type: String
-    movies: [Movie]
+    movies: [MiniMovie]
   }
   input ApiInput {
     list: String
@@ -41,8 +67,8 @@ const typeDefs = gql`
     getAllUser: [User]
     getGenres: [Genre]
     getIndexMovies: [MovieList]
-    getMovies(apiInput: ApiInput): [Movie]
-    getMovie(id: String): Movie
+    getMovies(apiInput: ApiInput): [MiniMovie]
+    getMovie(id: String): FullMovie
   }
   type Mutation {
     createUser(registerInput: RegisterInput): User
