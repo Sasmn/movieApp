@@ -70,7 +70,6 @@ const resolvers = {
     },
     getMovies: async (root, { apiInput: { list, genre, page } }) => {
       let params;
-      console.log(list, genre, page);
       if (genre === "") {
         params = {
           limit: "20",

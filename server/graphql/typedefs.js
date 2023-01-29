@@ -9,8 +9,6 @@ const typeDefs = gql`
   }
   type Genre {
     description: String
-    # endpoint: String
-    # img: String
   }
   type Movie {
     id: String

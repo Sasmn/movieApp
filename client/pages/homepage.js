@@ -7,12 +7,20 @@ import CardCSS from "../assets/Card.module.scss";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../context/MovieContext";
 import missingPoster from "../assets/missing_poster.jpg";
+import { useForm } from "../util/hooks";
 
 const Homepage = () => {
   const { user } = useContext(AuthContext);
   const mc = useContext(MovieContext);
-
   const navigate = useNavigate();
+
+  const searchCallback = () => {
+    navigate(`/movie/${values.search}`);
+  };
+
+  const { onChange, onSubmit, values } = useForm(searchCallback, {
+    search: "",
+  });
 
   const [indexMovies, setIndexMovies] = useState([]);
   const [labels, setLabels] = useState([]);
@@ -32,12 +40,18 @@ const Homepage = () => {
   };
 
   const onCardClick = (id) => {
-    navigate(`/${id}`);
+    navigate(`/movie/${id}`);
   };
 
   return (
     <div>
       <h1>Homepage</h1>
+
+      <form onSubmit={onSubmit}>
+        <label htmlFor="search">Search by movie ID: </label>
+        <input type="text" name="search" id="search" onChange={onChange} />
+        <button type="submit">Search</button>
+      </form>
 
       {user ? (
         <>
