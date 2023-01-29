@@ -24,6 +24,7 @@ const typeDefs = gql`
   input ApiInput {
     list: String
     genre: String
+    page: Int
   }
   input RegisterInput {
     username: String

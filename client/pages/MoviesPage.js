@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_GENRES, GET_MOVIES } from "../queries";
 import uniqid from "uniqid";
@@ -8,9 +8,10 @@ import { MovieContext } from "../context/MovieContext";
 import CardCSS from "../assets/Card.module.scss";
 import missingPoster from "../assets/missing_poster.jpg";
 
-
 const MoviesPage = () => {
   const navigate = useNavigate();
+  let { page } = useParams();
+  page = Number(page);
   const mc = useContext(MovieContext);
 
   const getGenres = useQuery(GET_GENRES);
@@ -22,11 +23,14 @@ const MoviesPage = () => {
     }
   }, [getGenres.data]);
 
+  console.log(mc.movie);
+
   const getMovies = useQuery(GET_MOVIES, {
     variables: {
       apiInput: {
         list: mc.movie,
         genre: "",
+        page: page,
       },
     },
   });
@@ -43,6 +47,10 @@ const MoviesPage = () => {
     navigate(`/movie/${id}`);
   };
 
+  const changePage = (v) => {
+    navigate(`/movies/${page + v}`);
+  };
+
   return (
     <div>
       <form>
@@ -52,25 +60,35 @@ const MoviesPage = () => {
           ))}
         </ul>
       </form>
-      {movies.map((movie) => (
-        <div key={uniqid()}>
-          <h4>{movie.title}</h4>
-          <img
-            className={CardCSS.img}
-            onClick={() => onClick(movie.id)}
-            src={movie.img}
-            onError={({ target }) => {
-              if (target.src !== missingPoster) {
-                target.onerror = null;
-                target.src = missingPoster;
-              } else {
-                target.src = "";
-              }
-            }}
-            alt=""
-          />
-        </div>
-      ))}
+      <div className={CardCSS.container}>
+        {movies.map((movie) => (
+          <div key={uniqid()} className={CardCSS.card}>
+            <h4>{movie.title}</h4>
+            <img
+              className={CardCSS.img}
+              onClick={() => onClick(movie.id)}
+              src={movie.img}
+              onError={({ target }) => {
+                if (target.src !== missingPoster) {
+                  target.onerror = null;
+                  target.src = missingPoster;
+                } else {
+                  target.src = "";
+                }
+              }}
+              alt=""
+            />
+          </div>
+        ))}
+      </div>
+      <div>
+        {page === 1 ? (
+          <div></div>
+        ) : (
+          <button onClick={() => changePage(-1)}>Previous</button>
+        )}
+        <button onClick={() => changePage(1)}>Next</button>
+      </div>
     </div>
   );
 };

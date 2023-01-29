@@ -21,6 +21,7 @@ module.exports = (env, argv) => {
     devServer: {
       logging: "warn",
       noInfo: true,
+      historyApiFallback: true,
     },
     entry: ["@babel/polyfill", "./client", ...additionalEntries],
     resolve: {

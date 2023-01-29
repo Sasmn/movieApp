@@ -28,11 +28,11 @@ const Homepage = () => {
 
   const onClick = (m) => {
     mc.setMovie(m);
-    navigate("/movies");
+    navigate("/movies/1");
   };
 
   const onCardClick = (id) => {
-    navigate(`/movie/${id}`);
+    navigate(`/${id}`);
   };
 
   return (
@@ -64,7 +64,7 @@ const Homepage = () => {
         {labels.map((m, i) => {
           const cards = indexMovies[i].map((movie) => {
             return (
-              <div key={uniqid()}>
+              <div key={uniqid()} className={CardCSS.card}>
                 <h4>{movie.title}</h4>
                 <img
                   onClick={() => onCardClick(movie.id)}
@@ -87,7 +87,7 @@ const Homepage = () => {
             <div key={m}>
               <h2>{m}</h2>
               <button onClick={() => onClick(m)}>More</button>
-              {cards}
+              <div className={CardCSS.container}>{cards}</div>
             </div>
           );
         })}

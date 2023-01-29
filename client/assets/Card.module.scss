@@ -1,3 +1,13 @@
 .img {
   width: 200px;
 }
+
+.card {
+  width: 20vw;
+  flex: auto;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}

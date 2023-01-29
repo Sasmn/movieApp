@@ -7,6 +7,7 @@ import missingPoster from "../assets/missing_poster.jpg";
 
 const Movie = () => {
   let { id } = useParams();
+  console.log(id);
 
   const getMovie = useQuery(GET_MOVIE, {
     variables: {

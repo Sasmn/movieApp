@@ -1,4 +1,3 @@
-// import missingPoster from "../missing_poster.jpg";
 const axios = require("axios");
 require("dotenv").config();
 
@@ -49,23 +48,6 @@ const resolvers = {
         }
       }
 
-      // const imageUrl = async (img) => {
-      //   let safeUrl;
-      //   img === null
-      //     ? (safeUrl = missingPoster)
-      //     : await axios
-      //         .get(img.url)
-      //         .then(() => {
-      //           safeUrl = img.url;
-      //         })
-      //         .catch((error) => {
-      //           safeUrl = missingPoster;
-      //         });
-
-      //   console.log(safeUrl);
-      //   return safeUrl;
-      // };
-
       movieLists = movieLists.map((movieList, index) => {
         movieList = movieList.map((movie) => {
           let url;
@@ -75,7 +57,7 @@ const resolvers = {
           return {
             id: movie.id,
             title: movie.titleText.text,
-            img: url.concat("_V1_FM_UX600_.jpg"),
+            img: url.concat("_V1_FM_UX200_.jpg"),
           };
         });
         return {
@@ -86,18 +68,21 @@ const resolvers = {
 
       return movieLists;
     },
-    getMovies: async (root, { apiInput: { list, genre } }) => {
+    getMovies: async (root, { apiInput: { list, genre, page } }) => {
       let params;
+      console.log(list, genre, page);
       if (genre === "") {
         params = {
           limit: "20",
           list: list,
+          page: page,
         };
       } else {
         params = {
           limit: "20",
           list: list,
           genre: genre,
+          page: page,
         };
       }
       let movies;
@@ -128,7 +113,7 @@ const resolvers = {
         return {
           id: movie.id,
           title: movie.titleText.text,
-          img: url.concat("_V1_FM_UX600_.jpg"),
+          img: url.concat("_V1_FM_UX200_.jpg"),
         };
       });
       return movies;
@@ -149,7 +134,6 @@ const resolvers = {
       try {
         const { data } = await axios(options);
         const movie = data.results;
-        console.log(movie);
         let url;
         movie.primaryImage === null
           ? (url = "")
@@ -158,7 +142,7 @@ const resolvers = {
           return {
             id: movie.id,
             title: movie.titleText.text,
-            img: url.concat("_V1_FM_UX600_.jpg"),
+            img: url.concat("_V1_FM_UX1000_.jpg"),
           };
         }
       } catch (error) {

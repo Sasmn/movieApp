@@ -11,12 +11,14 @@ const app = express();
 
 // Require is here so we can delete it from cache when files change (*)
 // Adding the backend to the /api route as middleware
-app.use("/api", (req, res, next) => require("./server/index")(req, res, next)); // eslint-disable-line
+app.use("/api", (req, res, next) => {
+  require("@root/server")(req, res, next);
+}); // eslint-disable-line
 
 /**
  *  Use "hot loading" in backend
  */
-const watcher = chokidar.watch("./server", {
+const watcher = chokidar.watch("@root/server", {
   ignored: ["./server/queries.rest", "./server/models"],
 }); // Watch server folder
 watcher.on("ready", () => {
@@ -44,9 +46,8 @@ if (!inProduction) {
   app.use(hotMiddleWare(compiler)); //a böngészőt összeköti a szerverrel (figyeli a szerveren a változásokat - a devMiddleware általi új bundle-kat)
 
   app.use("*", (req, res, next) => {
-    //a harmadik MiddleWare, ami minden server-re küldött request esetén lefut
+    // a harmadik MiddleWare, ami minden server-re küldött request esetén lefut
     const filename = path.join(compiler.outputPath, "index.html"); //megadja az abszolút path-ját az index.html-nek (a dist fájlban levő)
-
     devMiddleware.waitUntilValid(() => {
       compiler.outputFileSystem.readFile(filename, (err, result) => {
         if (err) return next(err);
