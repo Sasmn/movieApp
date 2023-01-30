@@ -6,10 +6,11 @@ import LoginForm from "../pages/LoginForm";
 import RegisterForm from "../pages/RegisterForm";
 import Navbar from "./Navbar";
 import Movie from "../pages/Movie";
+import AppCSS from "../assets/App.module.scss";
 
 const App = () => {
   return (
-    <div>
+    <div className={AppCSS.container}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Homepage />} />

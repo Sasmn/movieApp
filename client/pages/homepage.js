@@ -24,7 +24,7 @@ const Homepage = () => {
   const [indexMovies, setIndexMovies] = useState([]);
   const [labels, setLabels] = useState([]);
 
-  const { data } = useQuery(GET_INDEX_MOVIES);
+  const { data, loading } = useQuery(GET_INDEX_MOVIES);
 
   useEffect(() => {
     if (data) {
@@ -73,7 +73,7 @@ const Homepage = () => {
             >
               {user.username}
             </span>
-            . You are logged in.
+            You are logged in.
           </h2>
         </>
       ) : (
@@ -82,9 +82,13 @@ const Homepage = () => {
         </>
       )}
 
-      <div ref={panelsRef}>
-        <Panels />
-      </div>
+      {loading ? (
+        <div>loading...</div>
+      ) : (
+        <div ref={panelsRef}>
+          <Panels />
+        </div>
+      )}
     </div>
   );
 };

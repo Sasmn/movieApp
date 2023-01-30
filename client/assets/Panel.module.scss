@@ -5,7 +5,6 @@
   width: 100vw;
   height: 100vh;
 
-  transition: transform 0.6s;
   transition-delay: 0.1s;
   overflow: hidden;
 
@@ -19,9 +18,14 @@
   align-items: center;
 }
 
-.panel > * {
+.passiveContainer {
   transition: 0.8s;
   transition-delay: 0s;
-  transform: translateX(50%);
   opacity: 0;
+}
+
+.activeContainer {
+  transition: 0.8s;
+  transition-delay: 0.3s;
+  opacity: 1;
 }

@@ -1,16 +1,15 @@
 import PanelCSS from "../assets/Panel.module.scss";
 
 export default function fullPageScroll(panelsParent) {
-  console.log("MEGYÜNK");
   const panels = panelsParent.childNodes;
   /* INITIAL POSITIONS */
   for (let i = 1; i < panels.length; i++) {
     const p = panels[i];
 
+    p.style.transition = "0s";
     p.style.transform = `translateY(CALC(${i}*150vh)) scale(0.5)`;
   }
-  panels[0].children[0].style.transform = "translateX(0)";
-  panels[0].children[0].style.opacity = 1;
+  panels[0].childNodes[0].classList.add(PanelCSS.activeContainer);
 
   let activePanel = 0;
 
@@ -146,17 +145,11 @@ export default function fullPageScroll(panelsParent) {
 }
 
 function scrollPanels(panels, activePanel) {
-  /* initial sets - transition purposes */
-
+  /* initial sets - transition */
   panels.forEach((p) => {
-    p.children[0].style.transitionDelay = "0s";
-    p.children[0].style.opacity = 0;
-    p.children[0].style.transform = "translateX(50%)";
+    p.childNodes[0].classList.add(PanelCSS.passiveContainer);
   });
-  console.log(panels[activePanel].childNodes);
-  panels[activePanel].children[0].style.transitionDelay = "0.3s";
-  panels[activePanel].children[0].style.opacity = 1;
-  panels[activePanel].children[0].style.transform = "translateX(0)";
+  panels[activePanel].childNodes[0].classList.add(PanelCSS.activeContainer);
 
   /* transform the panels to their new position (and scale them for nice transition) */
   for (let i = 0; i < panels.length; i++) {
@@ -167,6 +160,7 @@ function scrollPanels(panels, activePanel) {
     } else {
       y = 1;
     }
+    p.style.transition = "transform 0.6s";
     p.style.transform = `scale(${y}) translateY(CALC(${
       i - activePanel
     }* 150vh))`;
