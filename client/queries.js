@@ -81,6 +81,11 @@ export const GET_COMMENTS_USER = gql`
       username
       movieID
       body
+      date {
+        day
+        month
+        year
+      }
     }
   }
 `;
@@ -97,8 +102,8 @@ export const CREATE_COMMENT = gql`
 `;
 
 export const DELETE_COMMENT = gql`
-  mutation DeleteComment($deleteCommentId2: ID!, $username: String!) {
-    deleteComment(id: $deleteCommentId2, username: $username) {
+  mutation DeleteComment($id: ID!, $username: String) {
+    deleteComment(id: $id, username: $username) {
       _id
       username
       movieID

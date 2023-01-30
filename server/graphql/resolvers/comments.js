@@ -23,11 +23,19 @@ const resolvers = {
         }
       }
 
+      const date = new Date();
+      console.log(date.getMonth(), date.getFullYear());
+      console.log(date.getDate());
       //Build out the mongoose model
       const newComment = new Comment({
         username,
         movieID,
         body,
+        date: {
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+        },
       });
 
       //Save comment in MongoDB
@@ -44,7 +52,6 @@ const resolvers = {
       if (comment.username !== username) {
         throw new ApolloError("Invalid username");
       }
-
       //check if user is still logged in
       const user = await User.findOne({ username: username });
 

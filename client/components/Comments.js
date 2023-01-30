@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useQuery, useMutation } from "@apollo/client";
-import { CREATE_COMMENT, GET_COMMENTS_MOVIE } from "../queries";
+import { CREATE_COMMENT, DELETE_COMMENT, GET_COMMENTS_MOVIE } from "../queries";
 import CardCSS from "../assets/Card.module.scss";
 import { useForm } from "../util/hooks";
 
@@ -35,6 +35,26 @@ const Comments = ({ movieID }) => {
     },
   });
 
+  const [deleteComment] = useMutation(DELETE_COMMENT, {
+    onError({ graphQLErrors }) {
+      setErrors(graphQLErrors);
+    },
+    onCompleted({ deleteComment }) {
+      setComments(
+        comments.filter((comment) => comment._id !== deleteComment._id)
+      );
+    },
+  });
+
+  const handleCommentDelete = (id) => {
+    deleteComment({
+      variables: {
+        id: id,
+        username: user ? user.username : "",
+      },
+    });
+  };
+
   const { data, error } = useQuery(GET_COMMENTS_MOVIE, {
     variables: {
       movieID,
@@ -45,6 +65,7 @@ const Comments = ({ movieID }) => {
   useEffect(() => {
     if (data) {
       setComments(data.getAllCommentsByMovieID);
+      console.log(comments);
     }
   }, [data]);
 
@@ -68,21 +89,26 @@ const Comments = ({ movieID }) => {
         <div>Log in, to write a comment!</div>
       )}
       <ul>
-        {comments.map((comment) => (
-          <li key={comment._id}>
-            <p>{comment.username}</p>
-            <p>{comment.body}</p>
-            {user &&
-              (user.username === comment.username ? (
-                <>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </>
-              ) : (
-                <></>
-              ))}
-          </li>
-        ))}
+        {comments
+          .slice()
+          .reverse()
+          .map((comment) => (
+            <li key={comment._id}>
+              <p>{comment.username}</p>
+              <p>{comment.body}</p>
+              {user &&
+                (user.username === comment.username ? (
+                  <>
+                    <button>Edit</button>
+                    <button onClick={() => handleCommentDelete(comment._id)}>
+                      Delete
+                    </button>
+                  </>
+                ) : (
+                  <></>
+                ))}
+            </li>
+          ))}
       </ul>
     </div>
   );

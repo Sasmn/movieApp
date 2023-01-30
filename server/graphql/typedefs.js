@@ -50,6 +50,7 @@ const typeDefs = gql`
     username: String
     movieID: String
     body: String
+    date: Date
   }
   input ApiInput {
     list: String
@@ -87,7 +88,7 @@ const typeDefs = gql`
     createUser(registerInput: RegisterInput): User
     loginUser(loginInput: LoginInput): User
     createComment(commentInput: CommentInput): Comment
-    deleteComment(id: ID!, username: String!): Comment
+    deleteComment(id: ID!, username: String): Comment
     editComment(id: ID!, body: String, username: String!): Comment
   }
 `;
