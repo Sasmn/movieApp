@@ -1,17 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useQuery } from "@apollo/client";
 import { GET_INDEX_MOVIES } from "../queries";
-import uniqid from "uniqid";
-import CardCSS from "../assets/Card.module.scss";
 import { useNavigate } from "react-router-dom";
-import { MovieContext } from "../context/MovieContext";
-import missingPoster from "../assets/missing_poster.jpg";
 import { useForm } from "../util/hooks";
+import fullPageScroll from "Utilities/fullPageScroll";
+import Card from "../components/Card";
+import HomePagePanel from "Components/HomePagePanel";
+import HomepageSCC from "Assets/Homepage.module.scss";
 
 const Homepage = () => {
   const { user } = useContext(AuthContext);
-  const mc = useContext(MovieContext);
   const navigate = useNavigate();
 
   const searchCallback = () => {
@@ -25,7 +24,7 @@ const Homepage = () => {
   const [indexMovies, setIndexMovies] = useState([]);
   const [labels, setLabels] = useState([]);
 
-  const { error, loading, data } = useQuery(GET_INDEX_MOVIES);
+  const { data } = useQuery(GET_INDEX_MOVIES);
 
   useEffect(() => {
     if (data) {
@@ -34,17 +33,26 @@ const Homepage = () => {
     }
   }, [data]);
 
-  const onClick = (m) => {
-    mc.setMovie(m);
-    navigate("/movies/1");
-  };
+  const Panels = () =>
+    labels.map((l, i) => {
+      const cards = indexMovies[i].map((movie) => (
+        <Card key={movie.id} movie={movie} />
+      ));
+      return <HomePagePanel key={l} list={l} cards={cards} />;
+    });
 
-  const onCardClick = (id) => {
-    navigate(`/movie/${id}`);
-  };
+  const panelsRef = useRef(null);
+  useEffect(() => {
+    if (panelsRef.current) {
+      const panelsJSX = panelsRef.current.childNodes;
+      if (panelsJSX.length > 0) {
+        fullPageScroll(panelsRef.current);
+      }
+    }
+  }, [labels, indexMovies]);
 
   return (
-    <div>
+    <div className={HomepageSCC.container}>
       <h1>Homepage</h1>
 
       <form onSubmit={onSubmit}>
@@ -74,37 +82,8 @@ const Homepage = () => {
         </>
       )}
 
-      <div>
-        {labels.map((m, i) => {
-          const cards = indexMovies[i].map((movie) => {
-            return (
-              <div key={uniqid()} className={CardCSS.card}>
-                <h4>{movie.title}</h4>
-                <img
-                  onClick={() => onCardClick(movie.id)}
-                  className={CardCSS.img}
-                  src={movie.img}
-                  onError={({ target }) => {
-                    if (target.src !== missingPoster) {
-                      target.onerror = null;
-                      target.src = missingPoster;
-                    } else {
-                      target.src = "";
-                    }
-                  }}
-                  alt=""
-                />
-              </div>
-            );
-          });
-          return (
-            <div key={m}>
-              <h2>{m}</h2>
-              <button onClick={() => onClick(m)}>More</button>
-              <div className={CardCSS.container}>{cards}</div>
-            </div>
-          );
-        })}
+      <div ref={panelsRef}>
+        <Panels />
       </div>
     </div>
   );

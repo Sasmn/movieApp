@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_COMMENT, DELETE_COMMENT, GET_COMMENTS_MOVIE } from "../queries";
-import CardCSS from "../assets/Card.module.scss";
 import { useForm } from "../util/hooks";
 
 const Comments = ({ movieID }) => {
