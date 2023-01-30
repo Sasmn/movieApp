@@ -5,7 +5,10 @@ export const useForm = (callback, initialState = {}) => {
   const [values, setValues] = useState(initialState);
 
   const onChange = (event) => {
-    if (event.target.nodeName === "INPUT") {
+    if (
+      event.target.nodeName === "INPUT" ||
+      event.target.nodeName === "TEXTAREA"
+    ) {
       setValues({ ...values, [event.target.name]: event.target.value }); // a target name-je lesz a state objecten belül a neve, és a value-ja a state object-en belül az értéke
     } else {
       setValues({
@@ -13,12 +16,13 @@ export const useForm = (callback, initialState = {}) => {
         [event.target.getAttribute("name")]: event.target.innerText,
       });
     }
-    console.log(values); //le van maradva 1-el, de ez nem probléma
+    console.log(values, event.target.nodeName); //le van maradva 1-el, de ez nem probléma
   };
 
   const onSubmit = (event) => {
     event.preventDefault(); //a default submit action megakadályozása
     callback(); // itt hívunk meg minden mást
+    setValues(initialState);
   };
 
   return {

@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 import { GET_MOVIE } from "../queries";
 import MoviepageCSS from "../assets/Moviepage.module.scss";
 import missingPoster from "../assets/missing_poster.jpg";
+import Comments from "Components/Comments";
 
 const Movie = () => {
   let { id } = useParams();
-  console.log(id);
 
   const getMovie = useQuery(GET_MOVIE, {
     variables: {
@@ -39,6 +39,7 @@ const Movie = () => {
         }}
         alt=""
       />
+      <Comments movieID={id} />
     </div>
   );
 };

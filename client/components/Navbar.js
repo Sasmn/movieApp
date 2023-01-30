@@ -19,6 +19,7 @@ const Navbar = () => {
       <Link to="/movies">Movies</Link>
       {user ? (
         <>
+          <h4>{user.username} logged in</h4>
           <button onClick={onLogout}>Logout</button>
         </>
       ) : (

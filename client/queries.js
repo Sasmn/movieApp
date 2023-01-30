@@ -64,8 +64,8 @@ export const GET_GENRES = gql`
 `;
 
 export const GET_COMMENTS_MOVIE = gql`
-  query GetAllCommentsByMovieID($movieId: String!) {
-    getAllCommentsByMovieID(movieID: $movieId) {
+  query GetAllCommentsByMovieID($movieID: String!) {
+    getAllCommentsByMovieID(movieID: $movieID) {
       _id
       username
       movieID
@@ -97,8 +97,8 @@ export const CREATE_COMMENT = gql`
 `;
 
 export const DELETE_COMMENT = gql`
-  mutation DeleteComment($deleteCommentId2: ID!) {
-    deleteComment(id: $deleteCommentId2) {
+  mutation DeleteComment($deleteCommentId2: ID!, $username: String!) {
+    deleteComment(id: $deleteCommentId2, username: $username) {
       _id
       username
       movieID
@@ -108,8 +108,8 @@ export const DELETE_COMMENT = gql`
 `;
 
 export const EDIT_COMMENT = gql`
-  mutation EditComment($editCommentId: ID!, $body: String) {
-    editComment(id: $editCommentId, body: $body) {
+  mutation EditComment($editCommentId: ID!, $body: String, $username: String!) {
+    editComment(id: $editCommentId, body: $body, username: $username) {
       _id
       username
       movieID
