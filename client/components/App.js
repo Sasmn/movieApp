@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Homepage from "../pages/Homepage";
-import MoviesPage from "../pages/MoviesPage";
-import LoginForm from "../pages/LoginForm";
-import RegisterForm from "../pages/RegisterForm";
-import Navbar from "./Navbar";
-import Movie from "../pages/Movie";
+import Homepage from "../pages/Homepage.js";
+import MoviesPage from "../pages/MoviesPage.js";
+import LoginForm from "../pages/LoginForm.js";
+import RegisterForm from "../pages/RegisterForm.js";
+import Navbar from "./Navbar.js";
+import Movie from "../pages/Movie.js";
 import AppCSS from "../assets/styles/App.module.scss";
 
 const App = () => {

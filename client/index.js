@@ -7,7 +7,7 @@ import client from "./apolloClient";
 import { AuthProvider } from "./context/AuthContext";
 
 import "./assets/styles/index.scss";
-import App from "./components/App";
+import App from "./components/App.js";
 import { MovieProvider } from "./context/MovieContext";
 
 const container = document.getElementById("root");
