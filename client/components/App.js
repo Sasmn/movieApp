@@ -6,7 +6,7 @@ import LoginForm from "../pages/LoginForm";
 import RegisterForm from "../pages/RegisterForm";
 import Navbar from "./Navbar";
 import Movie from "../pages/Movie";
-import AppCSS from "../assets/App.module.scss";
+import AppCSS from "../assets/styles/App.module.scss";
 
 const App = () => {
   return (

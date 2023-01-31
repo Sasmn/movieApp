@@ -1,11 +1,11 @@
 import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../context/MovieContext";
-import CardCSS from "../assets/Card.module.scss";
-import PanelCSS from "../assets/Panel.module.scss";
+import CardCSS from "../assets/styles/components/Card.module.scss";
+import PanelCSS from "../assets/styles/components/Panel.module.scss";
 import classnames from "classnames";
 import Button from "./Button";
-import Arrow from "../assets/Arrow.svg";
+import Arrow from "../assets/images/Arrow.svg";
 
 const HomePagePanel = ({ list, cList, cards }) => {
   const navigate = useNavigate();

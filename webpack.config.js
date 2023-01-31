@@ -72,7 +72,7 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: "index.html",
-        favicon: path.resolve(__dirname, "client/assets/movie-icon-27.png"),
+        favicon: path.resolve(__dirname, "client/assets/images/movie-icon-27.png"),
       }),
       ...additionalPlugins,
     ],

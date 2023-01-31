@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonCSS from "../assets/Button.module.scss";
+import ButtonCSS from "../assets/styles/components/Button.module.scss";
 import classnames from "classnames";
 
 const Button = ({ name, handleClick, direction }) => {

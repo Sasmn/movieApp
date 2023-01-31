@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import uniqid from "uniqid";
-import DropdownCSS from "../assets/Dropdown.module.scss";
+import DropdownCSS from "../assets/styles/components/Dropdown.module.scss";
 
 const DropDownFilter = ({ handleSelect, list, value, name }) => {
   return (

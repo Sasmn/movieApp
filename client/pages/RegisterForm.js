@@ -5,7 +5,7 @@ import { useForm } from "../util/hooks";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { CREATE_USER } from "../queries";
-import FormsCSS from "../assets/Forms.module.scss";
+import FormsCSS from "../assets/styles/components/Forms.module.scss";
 import Button from "../components/Button";
 
 const RegisterForm = (props) => {

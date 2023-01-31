@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../util/hooks";
 import { LOGIN_USER } from "../queries";
-import FormsCSS from "../assets/Forms.module.scss";
+import FormsCSS from "../assets/styles/components/Forms.module.scss";
 import Button from "../components/Button";
 
 const LoginForm = () => {

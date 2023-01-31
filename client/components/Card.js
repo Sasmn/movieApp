@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import CardCSS from "../assets/Card.module.scss";
-import missingPoster from "../assets/missing_poster.jpg";
+import CardCSS from "../assets/styles/components/Card.module.scss";
+import missingPoster from "../assets/images/missing_poster.jpg";
 import { rotateCard, rotateCardBack } from "Utilities/rotateCard";
 
 const Card = ({ movie }) => {

@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_COMMENT, DELETE_COMMENT, GET_COMMENTS_MOVIE } from "../queries";
 import { useForm } from "../util/hooks";
-import CommentsCSS from "../assets/Comments.module.scss";
+import CommentsCSS from "../assets/styles/components/Comments.module.scss";
 import Button from "./Button";
 
 const Comments = ({ movieID }) => {

@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import client from "./apolloClient";
 import { AuthProvider } from "./context/AuthContext";
 
-import "./assets/index.scss";
+import "./assets/styles/index.scss";
 import App from "./components/App";
 import { MovieProvider } from "./context/MovieContext";
 

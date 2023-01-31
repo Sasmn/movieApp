@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import NavbarCSS from "../assets/Navbar.module.scss";
+import NavbarCSS from "../assets/styles/components/Navbar.module.scss";
 import { useForm } from "../util/hooks";
 import Button from "./Button";
 

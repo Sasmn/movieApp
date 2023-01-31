@@ -1,4 +1,4 @@
-import PanelCSS from "../assets/Panel.module.scss";
+import PanelCSS from "../assets/styles/components/Panel.module.scss";
 
 export default function fullPageScroll(panelsParent) {
   const panels = panelsParent.childNodes;

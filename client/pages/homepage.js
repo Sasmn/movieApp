@@ -4,7 +4,7 @@ import { GET_INDEX_MOVIES } from "../queries";
 import fullPageScroll from "Utilities/fullPageScroll";
 import Card from "../components/Card";
 import HomePagePanel from "Components/HomePagePanel";
-import HomepageSCC from "Assets/Homepage.module.scss";
+import HomepageSCC from "Assets/styles/pages/Homepage.module.scss";
 
 const Homepage = () => {
   const [indexMovies, setIndexMovies] = useState([]);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_MOVIE } from "../queries";
-import MoviepageCSS from "../assets/Moviepage.module.scss";
+import MoviepageCSS from "../assets/styles/pages/Moviepage.module.scss";
 import Comments from "Components/Comments";
 import Card from "../components/Card";
 
