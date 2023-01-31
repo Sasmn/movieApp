@@ -16,7 +16,6 @@ export const useForm = (callback, initialState = {}) => {
         [event.target.getAttribute("name")]: event.target.innerText,
       });
     }
-    console.log(values, event.target.nodeName); //le van maradva 1-el, de ez nem probléma
   };
 
   const onSubmit = (event) => {
@@ -29,5 +28,6 @@ export const useForm = (callback, initialState = {}) => {
     onChange,
     onSubmit,
     values,
+    setValues,
   };
 };

@@ -30,6 +30,11 @@ export const GET_INDEX_MOVIES = gql`
         id
         title
         img
+        releaseDate {
+          day
+          month
+          year
+        }
       }
     }
   }
@@ -41,6 +46,11 @@ export const GET_MOVIES = gql`
       id
       title
       img
+      releaseDate {
+        day
+        month
+        year
+      }
     }
   }
 `;
@@ -48,9 +58,27 @@ export const GET_MOVIES = gql`
 export const GET_MOVIE = gql`
   query GetMovie($id: String) {
     getMovie(id: $id) {
+      title
       id
       img
-      title
+      plot
+      length
+      rating {
+        count
+        score
+      }
+      releaseDate {
+        day
+        month
+        year
+      }
+      genres {
+        description
+      }
+      actors {
+        name
+        img
+      }
     }
   }
 `;

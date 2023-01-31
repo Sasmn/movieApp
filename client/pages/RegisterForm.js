@@ -5,6 +5,8 @@ import { useForm } from "../util/hooks";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { CREATE_USER } from "../queries";
+import FormsCSS from "../assets/Forms.module.scss";
+import Button from "../components/Button";
 
 const RegisterForm = (props) => {
   const context = useContext(AuthContext); //
@@ -38,31 +40,36 @@ const RegisterForm = (props) => {
   });
 
   return (
-    <div>
-      <h3>Register</h3>
-      <p>Sign up</p>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="username">username: </label>
+    <div className={FormsCSS.container}>
+      <p className={FormsCSS.title}>Sign up</p>
+      <form onSubmit={onSubmit} className={FormsCSS.form} autoComplete="off">
+        <label htmlFor="username" className={FormsCSS.label}>
+          username:
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="username"
           id="username"
           value={values.username}
           onChange={onChange}
         />
         <br />
-        <label htmlFor="email">email: </label>
+        <label htmlFor="email" className={FormsCSS.label}>
+          email:
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="email"
           id="email"
           value={values.email}
           onChange={onChange}
         />
         <br />
-        <label htmlFor="password">password: </label>
+        <label htmlFor="password" className={FormsCSS.label}>
+          password:
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="password"
           id="password"
           type="password"
@@ -70,9 +77,11 @@ const RegisterForm = (props) => {
           onChange={onChange}
         />
         <br />
-        <label htmlFor="confirmPassword">confirm password: </label>
+        <label htmlFor="confirmPassword" className={FormsCSS.label}>
+          confirm password:
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="confirmPassword"
           id="confirmPassword"
           type="password"
@@ -80,7 +89,11 @@ const RegisterForm = (props) => {
           onChange={onChange}
         />
         <br />
-        <button type="submit">Register</button>
+        <Button
+          name="register"
+          handleClick={onSubmit}
+          direction="buttonRight"
+        />
       </form>
       {errors.map((error) => {
         return (

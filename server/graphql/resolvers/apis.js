@@ -1,5 +1,6 @@
 const axios = require("axios");
 require("dotenv").config();
+const { ApolloError } = require("apollo-server-errors");
 
 const resolvers = {
   Query: {
@@ -21,6 +22,7 @@ const resolvers = {
         }
       } catch (error) {
         console.error(error);
+        throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
       }
 
       let movieLists = [];
@@ -45,6 +47,7 @@ const resolvers = {
           }
         } catch (error) {
           console.error(error);
+          throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
         }
       }
 
@@ -78,10 +81,10 @@ const resolvers = {
         movies = data.results;
       } catch (error) {
         console.error(error);
+        throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
       }
 
       movies = movies.map((movie) => {
-        console.log(movie);
         return movieMini(movie);
       });
       return movies;
@@ -105,6 +108,7 @@ const resolvers = {
         movie = data.results;
       } catch (error) {
         console.error(error);
+        throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
       }
 
       const optionsActors = {
@@ -125,6 +129,7 @@ const resolvers = {
         actors = data.results;
       } catch (error) {
         console.error(error);
+        throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
       }
       if (movie && actors) {
         return movieFull(movie, actors);
@@ -153,6 +158,7 @@ const resolvers = {
         }
       } catch (error) {
         console.error(error);
+        throw new ApolloError("Server couldn't respond", "SERVER_ERROR");
       }
 
       return genres;

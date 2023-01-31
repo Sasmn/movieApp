@@ -1,5 +1,71 @@
 .container {
   display: flex;
-  width: 100%;
+  width: 100vw;
   flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 300;
+  background-color: rgb(58, 55, 55);
+  height: 8vh;
+}
+
+.title {
+  color: white;
+  margin-left: 2vw;
+  font-size: 3em;
+  text-decoration: none;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+}
+
+.input {
+  background-color: gray;
+  height: 80%;
+  font-size: 1.5em;
+  width: fit-content;
+  color: white;
+}
+
+.input::placeholder {
+  color: white;
+  text-align: center;
+}
+
+
+.login {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-right: 1em;
+}
+
+.link {
+  font-size: 2em;
+  text-decoration: none;
+  color: white;
+  transition: 0.5s;
+}
+
+.link:hover {
+  color: grey;
+}
+
+.loggedin {
+  font-size: 1.5em;
+  color: white;
+}
+
+.username {
+  font-size: 1.8;
+  color: aquamarine;
+  transition: 0.5s;
+}
+
+.username:hover {
+  color: azure;
 }

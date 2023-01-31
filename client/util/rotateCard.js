@@ -1,5 +1,3 @@
-import CardCSS from "../assets/Card.module.scss";
-
 export const rotateCard = ({ card, e, id }) => {
   const image = card.childNodes[0].childNodes[1];
   const cardContainer = card.childNodes[0];
@@ -11,17 +9,17 @@ export const rotateCard = ({ card, e, id }) => {
 
   let yCoord = (e.pageX - cardPosition.left - xCard / 2) / xCard;
   let xCoord = (-1 * (e.pageY - cardPosition.top - yCard / 2)) / yCard;
-  let y = yCoord * 20;
-  let x = xCoord * 20;
+  let y = yCoord * 17;
+  let x = xCoord * 17;
 
   /* TRANSLATE IMAGE */
   image.style.transitionDelay = "0s";
   image.style.transition = "0.1s";
   image.style.transform =
     "perspective(200px) translateY(" +
-    1 * x +
+    2 * x +
     "px) translateX(" +
-    -1 * y +
+    -2 * y +
     "px)  scale(1.4) translateX(-1%) translateY(-1%)";
 
   /* ROTATE CARD */

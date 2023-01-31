@@ -1,26 +1,12 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_INDEX_MOVIES } from "../queries";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "../util/hooks";
 import fullPageScroll from "Utilities/fullPageScroll";
 import Card from "../components/Card";
 import HomePagePanel from "Components/HomePagePanel";
 import HomepageSCC from "Assets/Homepage.module.scss";
 
 const Homepage = () => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const searchCallback = () => {
-    navigate(`/movie/${values.search}`);
-  };
-
-  const { onChange, onSubmit, values } = useForm(searchCallback, {
-    search: "",
-  });
-
   const [indexMovies, setIndexMovies] = useState([]);
   const [labels, setLabels] = useState([]);
 
@@ -33,12 +19,31 @@ const Homepage = () => {
     }
   }, [data]);
 
+  const correctLabels = [
+    "Most popular movies",
+    "Most popular series",
+    "Top box office ever",
+    "Top box office last weekend",
+    "Top rated movies",
+    "Top rated english movies",
+    "Lowest rated",
+    "Top rated series",
+    "Every movie and TV show",
+  ];
+
   const Panels = () =>
     labels.map((l, i) => {
       const cards = indexMovies[i].map((movie) => (
         <Card key={movie.id} movie={movie} />
       ));
-      return <HomePagePanel key={l} list={l} cards={cards} />;
+      return (
+        <HomePagePanel
+          key={l}
+          list={l}
+          cList={correctLabels[i]}
+          cards={cards}
+        />
+      );
     });
 
   const panelsRef = useRef(null);
@@ -53,35 +58,6 @@ const Homepage = () => {
 
   return (
     <div className={HomepageSCC.container}>
-      <h1>Homepage</h1>
-
-      <form onSubmit={onSubmit}>
-        <label htmlFor="search">Search by movie ID: </label>
-        <input type="text" name="search" id="search" onChange={onChange} />
-        <button type="submit">Search</button>
-      </form>
-
-      {user ? (
-        <>
-          <h2>
-            Welcome{" "}
-            <span
-              style={{
-                textDecoration: "underline",
-                color: "fuchsia",
-              }}
-            >
-              {user.username}
-            </span>
-            You are logged in.
-          </h2>
-        </>
-      ) : (
-        <>
-          <p>There's no user.</p>
-        </>
-      )}
-
       {loading ? (
         <div>loading...</div>
       ) : (

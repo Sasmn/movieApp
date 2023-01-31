@@ -2,12 +2,14 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_GENRES, GET_MOVIES } from "../queries";
-import uniqid from "uniqid";
 import { MovieContext } from "../context/MovieContext";
 import CardCSS from "../assets/Card.module.scss";
-import DropdownCSS from "../assets/Dropdown.module.scss";
-import missingPoster from "../assets/missing_poster.jpg";
+import MoviesPageCSS from "../assets/MoviesPage.module.scss";
 import { useForm } from "../util/hooks";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import DropdownFilter from "../components/DropdownFilter";
+import classnames from "classnames";
 
 const MoviesPage = () => {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const MoviesPage = () => {
   page = Number(page);
   const mc = useContext(MovieContext);
 
-  const { onChange, onSubmit, values } = useForm({
+  const { onChange, values } = useForm({
     genre: "",
   });
 
@@ -47,15 +49,11 @@ const MoviesPage = () => {
     }
   }, [MoviesQuery.data]); // eslint-disable-line
 
-  const onCardClick = (id) => {
-    navigate(`/movie/${id}`);
-  };
-
   const changePage = (v) => {
     navigate(`/movies/${page + v}`);
   };
 
-  const filterByGenre = (event) => {
+  const handleSelect = (event) => {
     let siblings = [].filter.call(
       event.target.parentNode.children,
       (child) => child !== event.target
@@ -70,59 +68,44 @@ const MoviesPage = () => {
     getMovies();
   };
 
+  if (MoviesQuery.loading) {
+    return <div>...loading</div>;
+  }
   return (
-    <div>
-      <form>
-        <ul>
-          {genres.map((genre) => (
-            <li
-              key={uniqid()}
-              className={
-                genre.description === values.genre ? DropdownCSS.selected : ""
-              }
-              name="genre"
-              onClick={(e) => filterByGenre(e)}
-            >
-              {genre.description}
-            </li>
-          ))}
-        </ul>
-      </form>
-      <div className={CardCSS.container}>
+    <div className={MoviesPageCSS.container}>
+      <DropdownFilter
+        name={"Genre"}
+        list={genres}
+        handleSelect={handleSelect}
+        value={values.genre}
+      />
+      <div className={classnames(CardCSS.container, MoviesPageCSS.cards)}>
         {movies.length === 0 ? (
           <h3>No results</h3>
         ) : (
-          movies.map((movie) => (
-            <div key={uniqid()} className={CardCSS.card}>
-              <h4>{movie.title}</h4>
-              <img
-                className={CardCSS.img}
-                onClick={() => onCardClick(movie.id)}
-                src={movie.img}
-                onError={({ target }) => {
-                  if (target.src !== missingPoster) {
-                    target.onerror = null;
-                    target.src = missingPoster;
-                  } else {
-                    target.src = "";
-                  }
-                }}
-                alt=""
-              />
-            </div>
-          ))
+          movies.map((movie) => <Card key={movie.id} movie={movie} />)
         )}
       </div>
-      <div>
+      <div className={MoviesPageCSS.buttons}>
         {page === 1 ? (
-          <div></div>
+          <></>
         ) : (
           movies.length === 20 && (
-            <button onClick={() => changePage(-1)}>Previous</button>
+            <Button
+              name={"Back"}
+              handleClick={() => changePage(-1)}
+              direction={"buttonLeft"}
+            />
           )
         )}
         {movies.length === 20 && (
-          <button onClick={() => changePage(1)}>Next</button>
+          <>
+            <Button
+              name={"Next"}
+              handleClick={() => changePage(1)}
+              direction={"buttonRight"}
+            />
+          </>
         )}
       </div>
     </div>

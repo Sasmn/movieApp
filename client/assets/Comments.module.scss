@@ -1,0 +1,81 @@
+.container {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.title {
+    font-size: 2.5em;
+}
+
+.commentsContainer {
+    margin-top: 1em;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.comment {
+    text-decoration: none;
+    list-style: none;
+
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.3em;
+
+    border-top: 2px solid gray;
+
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+}
+
+.author {
+    color: rgb(10, 141, 97);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.body {
+    padding-left: 0.2em;
+    font-size: 2em;
+}
+
+.button {
+    align-self: center;
+    cursor: pointer;
+    font-size: 1.7em;
+    background-color: red;
+    border-radius: 0.5em;
+}
+
+.button:hover {
+    background-color: rgb(216, 102, 102);
+}
+
+.addComment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.newComment {
+    flex-basis: 50%;
+    flex-grow: 1;
+    margin-right: 2em;
+    font-size: 2em;
+    height: 4em;
+
+    background-color: transparent;
+}
+
+.reminder {
+    font-size: 1.5em;
+}

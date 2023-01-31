@@ -3,6 +3,8 @@ import { AuthContext } from "../context/AuthContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { CREATE_COMMENT, DELETE_COMMENT, GET_COMMENTS_MOVIE } from "../queries";
 import { useForm } from "../util/hooks";
+import CommentsCSS from "../assets/Comments.module.scss";
+import Button from "./Button";
 
 const Comments = ({ movieID }) => {
   const { user } = useContext(AuthContext);
@@ -64,51 +66,63 @@ const Comments = ({ movieID }) => {
   useEffect(() => {
     if (data) {
       setComments(data.getAllCommentsByMovieID);
-      console.log(comments);
     }
   }, [data]);
 
   if (error) return <p>Error message: {error.message}</p>;
   return (
-    <div>
-      <h1>Comments</h1>
-      {user ? (
-        <form onSubmit={onSubmit}>
-          <label htmlFor="body">Search by movie ID: </label>
-          <textarea
-            type="textarea"
-            name="body"
-            id="body"
-            value={values.body}
-            onChange={onChange}
-          />
-          <button type="submit">Add comment</button>
-        </form>
-      ) : (
-        <div>Log in, to write a comment!</div>
-      )}
-      <ul>
-        {comments
-          .slice()
-          .reverse()
-          .map((comment) => (
-            <li key={comment._id}>
-              <p>{comment.username}</p>
-              <p>{comment.body}</p>
-              {user &&
-                (user.username === comment.username ? (
-                  <>
-                    <button>Edit</button>
-                    <button onClick={() => handleCommentDelete(comment._id)}>
+    <div className={CommentsCSS.container}>
+      <div className={CommentsCSS.test}>
+        <h1 className={CommentsCSS.title}>Comments</h1>
+        {user ? (
+          <form className={CommentsCSS.addComment} onSubmit={onSubmit} autocomplete="off">
+            <textarea
+              className={CommentsCSS.newComment}
+              type="textarea"
+              name="body"
+              id="body"
+              value={values.body}
+              onChange={onChange}
+            />
+            <Button
+              className={CommentsCSS.addButton}
+              name={"Add comment"}
+              handleClick={onSubmit}
+              direction={"buttonRight"}
+            />
+          </form>
+        ) : (
+          <div className={CommentsCSS.reminder}>
+            Log in, to write a comment!
+          </div>
+        )}
+        <ul className={CommentsCSS.commentsContainer}>
+          {comments
+            .slice()
+            .reverse()
+            .map((comment) => (
+              <li className={CommentsCSS.comment} key={comment._id}>
+                <div className={CommentsCSS.data}>
+                  <p className={CommentsCSS.author}>
+                    Author: {comment.username}
+                  </p>
+                  <p className={CommentsCSS.body}>{comment.body}</p>
+                </div>
+                {user &&
+                  (user.username === comment.username ? (
+                    <button
+                      className={CommentsCSS.button}
+                      onClick={() => handleCommentDelete(comment._id)}
+                    >
                       Delete
                     </button>
-                  </>
-                ) : (
-                  <></>
-                ))}
-            </li>
-          ))}
-      </ul>
+                  ) : (
+                    <></>
+                  ))}
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 };

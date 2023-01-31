@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { MovieContext } from "../context/MovieContext";
 import CardCSS from "../assets/Card.module.scss";
 import PanelCSS from "../assets/Panel.module.scss";
+import classnames from "classnames";
+import Button from "./Button";
+import Arrow from "../assets/Arrow.svg";
 
-const HomePagePanel = ({ list, cards }) => {
+const HomePagePanel = ({ list, cList, cards }) => {
   const navigate = useNavigate();
   const mc = useContext(MovieContext);
 
@@ -16,10 +19,21 @@ const HomePagePanel = ({ list, cards }) => {
   };
   return (
     <div className={PanelCSS.panel} ref={panelRef}>
-      <div>
-        <h2>{list}</h2>
-        <button onClick={() => onClick(list)}>More</button>
-        <div className={CardCSS.container}>{cards}</div>
+      <div className={PanelCSS.container}>
+        <h2 className={PanelCSS.title}>{cList}</h2>
+        <div className={classnames(CardCSS.container, PanelCSS.cards)}>
+          {cards}
+        </div>
+        <div className={PanelCSS.buttonContainer}>
+          <Button
+            name={"More"}
+            handleClick={() => onClick(list)}
+            direction={"buttonRight"}
+          />
+        </div>
+        <div className={PanelCSS.arrowContainer}>
+          <img className={PanelCSS.arrow} src={Arrow} alt="" />
+        </div>
       </div>
     </div>
   );

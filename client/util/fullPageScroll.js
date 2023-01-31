@@ -104,25 +104,26 @@ export default function fullPageScroll(panelsParent) {
   let touchDirection = "up";
   let touchPosition = 0;
 
-  const findTouchDirection = (e) => {
-    /* prevent any default touch effect */
-    e.preventDefault();
-    if (e.changedTouches[0].clientY > touchPosition) {
-      touchDirection = "up";
-    } else {
-      touchDirection = "down";
-    }
-
-    /* so this will always be the touchposition of the previous touch in the if statements */
-    touchPosition = e.changedTouches[0].clientY;
-  };
-
   /* on touchmove only register the touch direction */
-  panelsParent.addEventListener("touchmove", (e) => findTouchDirection(e), {
-    passive: false,
-  });
+  panelsParent.addEventListener(
+    "touchmove",
+    (e) => {
+      /* prevent any default touch effect */
+      e.preventDefault();
+      if (e.changedTouches[0].clientY > touchPosition) {
+        touchDirection = "up";
+      } else {
+        touchDirection = "down";
+      }
 
-  const findActivePanelTouch = () => {
+      /* so this will always be the touchposition of the previous touch in the if statements */
+      touchPosition = e.changedTouches[0].clientY;
+    },
+    { passive: false }
+  );
+
+  /* when touchmove ends, move to the activepanel (based on touchdirection), call the scrollPanel function */
+  panelsParent.addEventListener("touchend", () => {
     /* if theres no more panel up or down, return */
     if (touchDirection === "down" && activePanel === panels.length - 1) {
       return;
@@ -138,10 +139,7 @@ export default function fullPageScroll(panelsParent) {
     }
     /* calls the scrolling function */
     scrollPanels(panels, activePanel);
-  };
-
-  /* when touchmove ends, move to the activepanel (based on touchdirection), call the scrollPanel function */
-  panelsParent.addEventListener("touchend", () => findActivePanelTouch);
+  });
 }
 
 function scrollPanels(panels, activePanel) {

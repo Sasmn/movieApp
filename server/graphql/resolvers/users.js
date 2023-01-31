@@ -7,7 +7,7 @@ const resolvers = {
   Mutation: {
     createUser: async (
       root,
-      { registerInput: { username, email, password } }
+      { registerInput: { username, email, password, confirmPassword } }
     ) => {
       //See if old user exists with username
       const takenUsername = await User.findOne({ username });
@@ -26,6 +26,14 @@ const resolvers = {
         throw new ApolloError(
           `A user is already registered with email: ${email}`,
           "USER_ALREADY_EXISTS"
+        );
+      }
+
+      //see if passwords match
+      if (password !== confirmPassword) {
+        throw new ApolloError(
+          `Passwords don't match!`,
+          "PASSWORDS_DONT_MATCH"
         );
       }
 

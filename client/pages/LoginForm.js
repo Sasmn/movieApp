@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useForm } from "../util/hooks";
 import { LOGIN_USER } from "../queries";
+import FormsCSS from "../assets/Forms.module.scss";
+import Button from "../components/Button";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -34,31 +36,37 @@ const LoginForm = () => {
   });
 
   return (
-    <div>
-      <h3>Login</h3>
-      <p>Sign in</p>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="username">username: </label>
+    <div className={FormsCSS.container}>
+      <p className={FormsCSS.title}>Sign in</p>
+      <form onSubmit={onSubmit} className={FormsCSS.form} autocomplete="off">
+        <label htmlFor="username" className={FormsCSS.label}>
+          username: 
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="username"
           id="username"
           value={values.username}
           onChange={onChange}
         />
-        <br />
-        <label htmlFor="password">password: </label>
+        <label htmlFor="password" className={FormsCSS.label}>
+          password: 
+        </label>
         <input
-          autoComplete="off"
+          className={FormsCSS.input}
           name="password"
           id="password"
           type="password"
           value={values.password}
           onChange={onChange}
         />
-        <br />
-        <button type="submit">Login</button>
       </form>
+      <Button
+        className={FormsCSS.button}
+        name="log in"
+        handleClick={onSubmit}
+        direction="buttonRight"
+      />
       {errors.map((error) => {
         return (
           <div key={uniqid()}>
