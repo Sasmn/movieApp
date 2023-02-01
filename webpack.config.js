@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
       noInfo: true,
       historyApiFallback: true,
     },
-    entry: ["@babel/polyfill", "./client", ...additionalEntries],
+    entry: [path.resolve(__dirname, "./client/index.js"), ...additionalEntries],
     resolve: {
       alias: {
         Utilities: path.resolve(__dirname, "client/util/"),

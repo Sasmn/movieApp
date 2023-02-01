@@ -6,6 +6,9 @@
   "main": "index.js",
   "author": "Domonkos Sasi",
   "license": "ISC",
+  "browser": {
+    "[module-name]": false
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "start": "cross-env NODE_ENV=production node index.js",
