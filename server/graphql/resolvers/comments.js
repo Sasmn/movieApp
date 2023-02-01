@@ -1,5 +1,5 @@
-const Comment = require("../../models/Comment");
-const User = require("../../models/User");
+const Comment = require("../../models/comment");
+const User = require("../../models/sser");
 const { ApolloError } = require("apollo-server-errors");
 const jwt = require("jsonwebtoken");
 
