@@ -31,6 +31,7 @@ module.exports = (env, argv) => {
         Assets: path.resolve(__dirname, "client/assets/"),
         "@root": path.resolve(__dirname),
       },
+      extensions: [".ts", ".js"],
     },
     module: {
       rules: [
@@ -72,7 +73,10 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: "index.html",
-        favicon: path.resolve(__dirname, "client/assets/images/movie-icon-27.png"),
+        favicon: path.resolve(
+          __dirname,
+          "client/assets/images/movie-icon-27.png"
+        ),
       }),
       ...additionalPlugins,
     ],
