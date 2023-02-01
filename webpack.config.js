@@ -69,7 +69,6 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         "process.env.BUILT_AT": JSON.stringify(new Date().toISOString()),
         "process.env.NODE_ENV": JSON.stringify(mode),
-        "process.env.PORT": 5000,
       }),
       new HtmlWebpackPlugin({
         template: "index.html",
