@@ -17,10 +17,13 @@ module.exports = (env, argv) => {
 
   return {
     mode,
+    devtool: "inline-source-map",
     devServer: {
       logging: "warn",
+      noInfo: true,
+      historyApiFallback: true,
     },
-    entry: ["@babel/polyfill", "./client", ...additionalEntries],
+    entry: [path.resolve(__dirname, "./client/index.js"), ...additionalEntries],
     resolve: {
       alias: {
         Utilities: path.resolve(__dirname, "client/util/"),
@@ -28,6 +31,7 @@ module.exports = (env, argv) => {
         Assets: path.resolve(__dirname, "client/assets/"),
         "@root": path.resolve(__dirname),
       },
+      extensions: [".ts", ".js"],
     },
     module: {
       rules: [
@@ -40,7 +44,20 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ["style-loader", "css-loader"],
+          use: [
+            // Creates `style` nodes from JS strings
+            "style-loader",
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            // {
+            //   loader: "sass-loader",
+            //   options: {
+            //     // Prefer `dart-sass`
+            //     implementation: sass,
+            //   },
+            // },
+          ],
         },
         {
           test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -55,7 +72,10 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: "index.html",
-        favicon: path.resolve(__dirname, "client/assets/movie-icon-27.png"),
+        favicon: path.resolve(
+          __dirname,
+          "client/assets/images/movie-icon-27.png"
+        ),
       }),
       ...additionalPlugins,
     ],

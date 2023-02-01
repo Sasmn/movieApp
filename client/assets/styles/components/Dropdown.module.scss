@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  z-index: 100;
+  height: fit-content;
+  font-size: 2em;
+  position: fixed;
+}
+
+.title {
+  background-color: beige;
+  height: min-content;
+  padding: 0 1vw;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.button:nth-child(1) {
+  text-align: center;
+  background-color: beige;
+}
+
+.button:hover .list,
+.title:hover .list {
+  width: fit-content;
+  height: 40vh;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  width: max-content;
+  margin: 0;
+  overflow-y: scroll;
+  transition: 0.5s;
+  background-color: white;
+  padding: 0vh 2vh;
+}
+
+.notSelected {
+  list-style: none;
+}
+
+.notSelected:hover {
+  background-color: gray;
+}
+
+.selected {
+  background-color: gray;
+  color: bisque;
+  list-style: none;
+}

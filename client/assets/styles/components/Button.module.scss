@@ -1,0 +1,39 @@
+.button {
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 0 0.2em;
+    margin-left: 0.4em;
+    transform: perspective(200px);
+    transition: 0.2s;
+    border: 1px solid transparent;
+    background-color: white;
+}
+
+.button:hover {
+    border: 1px solid gray;
+    background-color: gray;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #5D4037;
+}
+
+.buttonRight:hover {
+    transform: perspective(200px) rotateY(10deg);
+}
+
+.buttonLeft:hover {
+    transform: perspective(200px) rotateY(-10deg);
+}
+
+.buttonRight:active {
+    transform: perspective(200px) rotateY(0deg);
+}
+
+.buttonLeft:active {
+    transform: perspective(200px) rotateY(0deg);
+}

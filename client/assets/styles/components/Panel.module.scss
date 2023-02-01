@@ -1,0 +1,90 @@
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  transition-delay: 0.1s;
+  overflow: hidden;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  justify-content: space-between;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 200;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: min-content;
+}
+
+.title {
+  flex-basis: 100%;
+  flex-shrink: 0;
+  text-align: center;
+  margin-bottom: 4vh;
+  text-shadow: 0 0 1em black;
+  font-size: 4em;
+}
+
+.cards {
+  flex-basis: 90%;
+  flex-grow: 0;
+}
+
+.buttonContainer {
+  flex-basis: 10%;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: left;
+  overflow: hidden;
+  align-items: center;
+  z-index: 500;
+}
+
+.arrowContainer {
+  flex-basis: 100%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.arrow {
+  max-width: 50px;
+  animation: moveArrow 2s infinite;
+}
+
+.passiveContainer {
+  transition: 0.8s;
+  transition-delay: 0s;
+  opacity: 0;
+}
+
+.activeContainer {
+  transition: 0.8s;
+  transition-delay: 0.3s;
+  opacity: 1;
+}
+
+@keyframes moveArrow {
+  0% {
+    transform: translateY(11vh);
+  }
+
+  50% {
+    transform: translateY(13vh);
+  }
+
+  100% {
+    transform: translateY(11vh);
+  }
+}

@@ -4,29 +4,32 @@ const chokidar = require("chokidar");
 const express = require("express");
 const path = require("path");
 require("express-async-errors");
+// const graphqlServer = require("./server/index")
 
 const { PORT, inProduction } = require("@util/common");
-console.log(inProduction);
 const app = express();
 
 // Require is here so we can delete it from cache when files change (*)
-app.use("/api", (req, res, next) => require("@root/server")(req, res, next)); // eslint-disable-line
+// Adding the backend to the /graphql route as middleware
+app.use("/graphql", (req, res, next) => {
+  require("@root/server")(req, res, next);
+}); // eslint-disable-line
 
 /**
  *  Use "hot loading" in backend
  */
-const watcher = chokidar.watch("server"); // Watch server folder
+const watcher = chokidar.watch("@root/server", {
+  ignored: ["./server/queries.rest", "./server/models"],
+}); // Watch server folder
 watcher.on("ready", () => {
   watcher.on("all", () => {
     Object.keys(require.cache).forEach((id) => {
-      if (id.includes("server")) delete require.cache[id]; // Delete all require caches that point to server folder (*)
+      if (id.includes("server") && !id.includes("models"))
+        delete require.cache[id]; // Delete all require caches that point to server folder (*)
     });
   });
 });
 
-/**
- * For frontend use hot loading when in development, else serve the static content
- */
 if (!inProduction) {
   /* eslint-disable */
   const webpack = require("webpack");
@@ -43,10 +46,8 @@ if (!inProduction) {
   app.use(hotMiddleWare(compiler)); //a böngészőt összeköti a szerverrel (figyeli a szerveren a változásokat - a devMiddleware általi új bundle-kat)
 
   app.use("*", (req, res, next) => {
-    //a "*" rész imo törölhető - ettől bármilyen út esetén (kivéve a semmilyen út, ami alap) lefut
-    //a harmadik MiddleWare, ami minden server-re küldött request esetén lefut (mint a többi)
+    // a harmadik MiddleWare, ami minden server-re küldött request esetén lefut
     const filename = path.join(compiler.outputPath, "index.html"); //megadja az abszolút path-ját az index.html-nek (a dist fájlban levő)
-
     devMiddleware.waitUntilValid(() => {
       compiler.outputFileSystem.readFile(filename, (err, result) => {
         if (err) return next(err);

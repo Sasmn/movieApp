@@ -1,0 +1,144 @@
+:root {
+  --card-margin: 2%;
+}
+
+.container {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  padding: 0 5vw;
+}
+
+.card {
+  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 1;
+  aspect-ratio: 2/3;
+  position: relative;
+  margin: var(--card-margin);
+  cursor: pointer;
+}
+
+.card>* {
+  box-shadow: 0 0 50px 10px black;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid grey;
+  pointer-events: none;
+}
+
+.innerBorder {
+  box-sizing: border-box;
+  position: absolute;
+  top: 1.5%;
+  left: 2%;
+  width: 96%;
+  height: 97%;
+  border-radius: 5px;
+  margin: 0;
+  border: 1px solid grey;
+  pointer-events: none;
+}
+
+.card:hover>*,
+.card:hover>*>.innerBorder {
+  border-color: white;
+}
+
+.img {
+  width: 1px;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -100;
+  transition: 0.05s;
+
+  filter: brightness(70%);
+  transform: scale(1.4) translateX(-1%) translateY(-1%);
+  pointer-events: none;
+}
+
+.info {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  width: 90%;
+  padding: 2% 5%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  flex-basis: 80%;
+  flex-shrink: 0;
+  color: white;
+  font-size: 2em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.year {
+  color: white;
+  font-size: 1.5em;
+  opacity: 0;
+  height: 0;
+  transition: 0.3s;
+}
+
+.card:hover .year {
+  height: 1.3em;
+  opacity: 1;
+}
+
+@media (orientation: portrait) {
+  .card {
+    flex-basis: calc((100% - var(--card-margin)*4) / 2);
+    max-height: 25vh;
+  }
+
+  .container {
+    padding: 0 5vw;
+  }
+
+  :root {
+    --card-margin: 4%;
+  }
+
+  @media screen and (max-width: 400px) {
+    .container {
+      padding: 0vw;
+    }
+  }
+}
+
+@media (orientation: landscape) {
+  .card {
+    flex-basis: calc((100% - var(--card-margin)*8) / 4);
+  }
+
+  @media screen and (min-width: 800px) {
+    .container {
+      padding: 0 5vw;
+    }
+  }
+
+  @media screen and (min-width: 1000px) {
+    .container {
+      padding: 0 10vw;
+    }
+  }
+
+  @media screen and (min-width: 1300px) {
+    .container {
+      padding: 0 15vw;
+    }
+  }
+}

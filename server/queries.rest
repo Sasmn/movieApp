@@ -1,0 +1,72 @@
+POST http://localhost:8000/api
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation createUser($registerInput: RegisterInput) {
+    createUser(registerInput: $registerInput) {
+        username
+        email
+        password
+        token
+    }
+}
+
+{
+    "registerInput": {
+        "username": "test5",
+        "email": "test@test.com",
+        "password": "test"
+    }
+}
+
+###
+POST  http://localhost:8000/api/graph
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query getUserByName ($username: String!) {
+    getUserByName(username: $username) {
+        username
+        email
+        password
+        token
+    }
+}
+
+{
+    "username": "test"
+}
+
+###
+POST  http://localhost:8000/api
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+    getAllUser {
+        username
+        email
+        password
+    }
+}
+
+###
+POST  http://localhost:8000/api
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation LoginUser($loginInput: LoginInput) {
+  loginUser(loginInput: $loginInput) {
+    username
+    email
+    password
+    token
+  }
+}
+
+{
+  "loginInput": {
+    "username": "test",
+    "password": "test"
+  }
+}

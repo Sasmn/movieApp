@@ -6,8 +6,8 @@
   "main": "index.js",
   "author": "Domonkos Sasi",
   "license": "ISC",
-  "engines": {
-    "node": ">=10.15"
+  "browser": {
+    "[module-name]": false
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon index.js",
@@ -17,28 +17,53 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.3",
+    "@apollo/react-hooks": "^4.0.0",
+    "@apollo/server": "^4.3.0",
     "@babel/core": "^7.20.7",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/register": "^7.18.9",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "apollo-server": "^3.11.1",
+    "apollo-server-errors": "^3.3.1",
+    "axios": "^1.2.5",
     "babel-loader": "^9.1.0",
+    "bcryptjs": "^2.4.3",
     "chokidar": "^3.5.3",
+    "classnames": "^2.3.2",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "file-loader": "^6.2.0",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "hot-module-replacement": "^3.0.4",
+    "html-webpack-plugin": "^5.5.0",
+    "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^3.1.2",
     "module-alias": "^2.2.2",
+    "mongoose": "^6.8.2",
+    "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-refresh": "^0.14.0",
+    "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
+    "uniqid": "^5.4.0",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.75.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "nodemonConfig": {
     "ignore": [
@@ -66,19 +91,15 @@
     ]
   },
   "devDependencies": {
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "cross-env": "^7.0.3",
-    "hot-module-replacement": "^3.0.4",
-    "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.20",
-    "react-refresh": "^0.14.0",
-    "webpack-cli": "^5.0.1",
     "webpack-dev-middleware": "^6.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-hot-middleware": "^2.25.3"
   },
   "_moduleAliases": {
     "@root": ".",
-    "@util": "server/util"
+    "@util": "server/util",
+    "@models": "server/models",
+    "@middleware": "server/middleware"
   }
 }
