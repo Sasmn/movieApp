@@ -5,7 +5,7 @@ import CardCSS from "../assets/styles/components/Card.module.scss";
 import PanelCSS from "../assets/styles/components/Panel.module.scss";
 import classnames from "classnames";
 import Button from "./Button";
-import Arrow from "../assets/images/Arrow.svg";
+import Arrow from "../assets/images/arrow.svg";
 
 const HomePagePanel = ({ list, cList, cards }) => {
   const navigate = useNavigate();
