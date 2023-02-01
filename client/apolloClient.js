@@ -1,10 +1,10 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const httpLink = new createHttpLink({
-  uri: `http://localhost:${process.env.PORT}/api`,
-});
+const httpLink = new createHttpLink();
 
+console.log(window.location.hostname);
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");
   return {
